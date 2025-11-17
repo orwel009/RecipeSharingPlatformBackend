@@ -57,4 +57,17 @@ router.put('/:id', auth, owner, async (req, res) => {
   } catch(err){ console.error(err); res.status(500).send('Server error'); }
 });
 
+router.delete("/:id", auth, owner, async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) return res.status(404).json({ msg: "Recipe not found" });
+
+    await recipe.deleteOne();
+    res.json({ msg: "Recipe deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
