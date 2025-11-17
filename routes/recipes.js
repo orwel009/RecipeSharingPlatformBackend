@@ -17,6 +17,13 @@ router.post('/', auth, async (req, res) => {
   } catch(err){ console.error(err); res.status(500).send('Server error'); }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const recipes = await Recipe.find().populate('user', 'name email').sort({ createdAt:-1 });
+    res.json(recipes);
+  } catch(err){ console.error(err); res.status(500).send('Server error'); }
+});
+
 
 
 module.exports = router;
