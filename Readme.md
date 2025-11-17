@@ -11,10 +11,7 @@ It provides endpoints for user authentication and recipe management.
 - [Features](#features)  
 - [Getting Started](#getting-started)  
 - [Environment Variables](#environment-variables)  
-- [API Endpoints](#api-endpoints)  
-- [Authentication & Authorization](#authentication--authorization)  
-- [Error Handling](#error-handling)  
-- [License](#license)
+- [API Endpoints](#api-endpoints)
 
 ---
 
