@@ -21,5 +21,20 @@ router.post('/register', async (req, res) => {
   } catch(err){ console.error(err); res.status(500).send('Server error'); }
 });
 
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if(!user) return res.status(400).json({ msg:'User not found' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) return res.status(400).json({ msg:'Incorrect password' });
+    const payload = { user: { id: user.id } };
+    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' }, (err, token) => {
+      if(err) throw err;
+      res.json({ token, user: { id:user.id, name:user.name, email:user.email } });
+    });
+  } catch(err){ console.error(err); res.status(500).send('Server error'); }
+});
+
 
 module.exports = router;
