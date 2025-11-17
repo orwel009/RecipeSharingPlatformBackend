@@ -1,16 +1,17 @@
 const express = require('express')
+const connectDB = require('./config/db');
 const dotenv = require('dotenv')
 const cors = require('cors')
 
 dotenv.config();
+connectDB();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({ message: "Server is running" });
-});
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/recipes', require('./routes/recipes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
