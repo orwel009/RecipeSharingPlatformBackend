@@ -33,6 +33,16 @@ router.get('/:id', async (req, res) => {
   } catch(err){ console.error(err); res.status(500).send('Server error'); }
 });
 
+router.get("/my", auth, async (req, res) => {
+  try {
+    const recipes = await Recipe.find({ user: req.user.id }).sort({ createdAt: -1 });
+    res.json(recipes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 router.put('/:id', auth, owner, async (req, res) => {
   const { title, ingredients, instructions } = req.body;
   try {
