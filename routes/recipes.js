@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id).populate('user', 'name email');
+    const recipe = await Recipe.findById(req.params.id).populate('user', 'name');
     if(!recipe) return res.status(404).json({ msg:'Recipe not found' });
     res.json(recipe);
   } catch(err){ console.error(err); res.status(500).send('Server error'); }
